@@ -4,7 +4,11 @@ namespace HW17
     internal class Program
     {
         static async Task Main(string[] args)
-        {            
+        {
+            // Задание 0. Выбрана ORM Dapper
+            // Задание 1. Выбрана БД Shop из ДЗ 16
+            // Задание 2. Созданы классы, которые описывают таблицы в БД
+            // Задание 3:
             var dapperProductsRepository = new DapperProductsRepository();
 
             #region Таблица products
@@ -89,8 +93,35 @@ namespace HW17
             {
                 Console.WriteLine($"{order.id} | {order.customerId} | {order.productId} | {order.quantity}");
             }
-            Console.WriteLine("-----------------------------------------\n\n\n"); 
+            Console.WriteLine("-----------------------------------------\n\n\n");
             #endregion
+
+
+
+            // Задание 4:
+            commandText = 
+                $"SELECT " +
+                $"c.id as CustomerID, " +
+                $"c.firstname as FirstName, " +
+                $"c.lastname as LastName, " +
+                $"o.productid as ProductID, " +
+                $"o.quantity as ProductQuantity, " +
+                $"p.price as ProductPrice " +
+                $"FROM " +
+                $"customers as c " +
+                $"LEFT JOIN orders as o " +
+                $"ON c.id = o.customerid " +
+                $"LEFT JOIN products as p " +
+                $"ON o.productid = p.id " +
+                $"WHERE c.Age > @a AND p.id = @i";
+            DapperJoinedTableRepository dapperJoinedTableRepository = new DapperJoinedTableRepository();
+            var joinedTable = await dapperJoinedTableRepository.GetJoinedTable(commandText, 30, 1);
+            Console.WriteLine("Задание 4. Таблица joinedTable");
+            foreach (var j in joinedTable)
+            {
+                Console.WriteLine($"{j.customerId} | {j.firstName} | {j.lastName} | {j.productId} | {j.productQuantity} | {j.productPrice}");
+            }
+            Console.WriteLine("-----------------------------------------\n\n\n");
         }
     }
 }
