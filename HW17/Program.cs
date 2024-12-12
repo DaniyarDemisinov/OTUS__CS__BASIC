@@ -9,9 +9,9 @@ namespace HW17
             // Задание 1. Выбрана БД Shop из ДЗ 16
             // Задание 2. Созданы классы, которые описывают таблицы в БД
             // Задание 3:
+            #region Таблица products
             var dapperProductsRepository = new DapperProductsRepository();
 
-            #region Таблица products
             string commandText = "SELECT * FROM products";
 
             // Выборка 1
